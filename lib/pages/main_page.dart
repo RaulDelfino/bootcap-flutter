@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:trilhaapp/pages/dados_cadastrais.dart';
-import 'package:trilhaapp/pages/pagina1.dart';
+import 'package:trilhaapp/pages/card_page.dart';
 import 'package:trilhaapp/pages/pagina2.dart';
 import 'package:trilhaapp/pages/pagina3.dart';
+import 'package:trilhaapp/shared/widgets/custom_drawer.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -20,49 +20,7 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(
         title: const Text("Main Page"),
       ),
-      drawer: Drawer(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              InkWell(
-                child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: const Text("Dados Cadastrais")),
-                onTap: () {
-                  Navigator.pop(context); // fechar drawer
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DadosPage()));
-                },
-              ),
-              const Divider(),
-              const SizedBox(height: 10),
-              InkWell(
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: const Text("Configurações"),
-                ),
-                onTap: () {},
-              ),
-              const Divider(),
-              const SizedBox(height: 10),
-              InkWell(
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: const Text("Termos de uso e Privacidade"),
-                ),
-                onTap: () {},
-              ),
-            ],
-          ),
-        ),
-      ),
+      drawer: const CustomDrawer(),
       body: PageView(
           onPageChanged: (value) {
             setState(() {
@@ -72,7 +30,7 @@ class _MainPageState extends State<MainPage> {
           controller: controller,
           scrollDirection: Axis.vertical,
           children: const [
-            Pagina1Page(),
+            Cardpage(),
             Pagina2Page(),
             Pagina3Page(),
           ]),
