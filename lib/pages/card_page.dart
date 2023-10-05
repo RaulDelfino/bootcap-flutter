@@ -21,8 +21,9 @@ class _CardpageState extends State<Cardpage> {
   }
 
   void carregarDados() async {
+
     cardDetail = await cardDetailRepository.get();
-    setState(() {});
+        setState(() { });
   }
 
   @override

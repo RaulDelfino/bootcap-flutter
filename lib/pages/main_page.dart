@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:trilhaapp/pages/List_view_horizontal.dart';
 import 'package:trilhaapp/pages/card_page.dart';
-import 'package:trilhaapp/pages/pagina2.dart';
-import 'package:trilhaapp/pages/pagina3.dart';
+import 'package:trilhaapp/pages/image_assets.dart';
+import 'package:trilhaapp/pages/List_vews.dart';
+import 'package:trilhaapp/pages/tarefa_page.dart';
 import 'package:trilhaapp/shared/widgets/custom_drawer.dart';
 
 class MainPage extends StatefulWidget {
@@ -28,13 +30,16 @@ class _MainPageState extends State<MainPage> {
             });
           },
           controller: controller,
-          scrollDirection: Axis.vertical,
+          scrollDirection: Axis.horizontal,
           children: const [
             Cardpage(),
-            Pagina2Page(),
-            Pagina3Page(),
+            ImageAssets(),
+            ListViewVPage(),
+            ListViewHorizontal(),
+            TarefaPage(),
           ]),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: posicaoPagina,
         onTap: (value) {
           controller.jumpToPage(value);
@@ -43,6 +48,8 @@ class _MainPageState extends State<MainPage> {
           BottomNavigationBarItem(label: "home", icon: Icon(Icons.home)),
           BottomNavigationBarItem(label: "pag1", icon: Icon(Icons.add)),
           BottomNavigationBarItem(label: "pag2", icon: Icon(Icons.person)),
+          BottomNavigationBarItem(label: "pag3", icon: Icon(Icons.image)),
+          BottomNavigationBarItem(label: "tarefas", icon: Icon(Icons.list)),
         ],
       ),
     );
