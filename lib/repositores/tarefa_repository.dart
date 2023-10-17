@@ -1,4 +1,4 @@
-import 'package:trilhaapp/pages/model/tarefa.dart';
+import 'package:trilhaapp/model/tarefa.dart';
 
 class TarefaRepository {
   List<Tarefa> _tarefas = [];

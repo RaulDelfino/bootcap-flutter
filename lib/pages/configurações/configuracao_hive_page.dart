@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:trilhaapp/pages/services/app_storage.dart';
+import 'package:trilhaapp/model/configuracaos_model.dart';
+import 'package:trilhaapp/repositores/configuracao_repository.dart';
 
-class ConfiguracaoPage extends StatefulWidget {
-  const ConfiguracaoPage({super.key});
+import 'package:trilhaapp/services/app_storage.dart';
+
+class ConfiguracaoHivePage extends StatefulWidget {
+  const ConfiguracaoHivePage({super.key});
 
   @override
-  State<ConfiguracaoPage> createState() => _ConfiguracaoPageState();
+  State<ConfiguracaoHivePage> createState() => _ConfiguracaoHivePageState();
 }
 
-class _ConfiguracaoPageState extends State<ConfiguracaoPage> {
-  AppStorage storage = AppStorage();
+class _ConfiguracaoHivePageState extends State<ConfiguracaoHivePage> {
+  late ConfiguracaoRepository configuracaoRepository;
+  ConfiguracoesModel configuracoesModel = ConfiguracoesModel.vazio();
+
   TextEditingController nomeUsuarioController = TextEditingController();
   TextEditingController alturaController = TextEditingController();
-  String? nomeUsuario;
-  double? altura;
-  bool receberPushNotificacion = false;
-  bool temaEscuro = false;
 
   @override
   void initState() {
@@ -25,11 +25,12 @@ class _ConfiguracaoPageState extends State<ConfiguracaoPage> {
   }
 
   carregarDados() async {
-    nomeUsuarioController.text = await storage.getConfigNomeUsuario();
-    alturaController.text =
-        (await (storage.getConfigAlturaUsuario())).toString();
-    receberPushNotificacion = await storage.getConfigNotificacao();
-    temaEscuro = await storage.getConfigTemaEscuro();
+    configuracaoRepository = await ConfiguracaoRepository.carregar();
+    configuracoesModel = configuracaoRepository.obterDados();
+
+    nomeUsuarioController.text = configuracoesModel.nomeUsuario;
+    alturaController.text = configuracoesModel.altura.toString();
+
     setState(() {});
   }
 
@@ -38,7 +39,7 @@ class _ConfiguracaoPageState extends State<ConfiguracaoPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Configurações"),
+          title: const Text("Configurações Hive"),
         ),
         body: Container(
           child: ListView(
@@ -60,18 +61,18 @@ class _ConfiguracaoPageState extends State<ConfiguracaoPage> {
               ),
               SwitchListTile(
                   title: const Text("Receber Notificações"),
-                  value: receberPushNotificacion,
+                  value: configuracoesModel.receberNotificacao,
                   onChanged: (bool value) {
                     setState(() {
-                      receberPushNotificacion = value;
+                      configuracoesModel.receberNotificacao = value;
                     });
                   }),
               SwitchListTile(
                   title: const Text("Tema escuro"),
-                  value: temaEscuro,
+                  value: configuracoesModel.temaEscuro,
                   onChanged: (bool value) {
                     setState(() {
-                      temaEscuro = value;
+                      configuracoesModel.temaEscuro = value;
                     });
                   }),
               TextButton(
@@ -79,8 +80,8 @@ class _ConfiguracaoPageState extends State<ConfiguracaoPage> {
                     FocusManager.instance.primaryFocus
                         ?.unfocus(); // fechar teclado
                     try {
-                      await storage.setConfigAlturaUsuario(
-                          double.parse(alturaController.text) ?? 0);
+                      configuracoesModel.altura =
+                          double.parse(alturaController.text);
                     } catch (e) {
                       // ignore: use_build_context_synchronously
                       showDialog(
@@ -100,10 +101,8 @@ class _ConfiguracaoPageState extends State<ConfiguracaoPage> {
                           });
                       return;
                     }
-                    await storage
-                        .setConfigNomeUsuario(nomeUsuarioController.text);
-                    await storage.setConfigNotificacao(receberPushNotificacion);
-                    await storage.setConfigTemaEscuro(temaEscuro);
+                    configuracoesModel.nomeUsuario = nomeUsuarioController.text;
+                    configuracaoRepository.salvar(configuracoesModel);
                     Navigator.pop(context);
                   },
                   child: const Text("Salvar")),

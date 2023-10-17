@@ -1,17 +1,19 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:trilhaapp/pages/services/app_storage.dart';
 
-class NumerosAleatoriosPage extends StatefulWidget {
-  const NumerosAleatoriosPage({super.key});
+import 'package:trilhaapp/services/app_storage.dart';
+
+class NumerosAleatoriosSheredPreferencesPage extends StatefulWidget {
+  const NumerosAleatoriosSheredPreferencesPage({super.key});
 
   @override
-  State<NumerosAleatoriosPage> createState() => _NumerosAleatoriosPageState();
+  State<NumerosAleatoriosSheredPreferencesPage> createState() =>
+      _NumerosAleatoriosSheredPreferencesPageState();
 }
 
-class _NumerosAleatoriosPageState extends State<NumerosAleatoriosPage> {
+class _NumerosAleatoriosSheredPreferencesPageState
+    extends State<NumerosAleatoriosSheredPreferencesPage> {
   int? numeroGerado;
   int? quantidadeClicks;
 

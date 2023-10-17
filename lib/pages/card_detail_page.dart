@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trilhaapp/pages/model/card_detail.dart';
+import 'package:trilhaapp/model/card_detail.dart';
 
 class CardDetailPage extends StatelessWidget {
   final CardDetail cardDetail;

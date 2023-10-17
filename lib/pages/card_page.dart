@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trilhaapp/pages/card_detail_page.dart';
-import 'package:trilhaapp/pages/model/card_detail.dart';
-import 'package:trilhaapp/pages/repositores/card_detail_repository.dart';
+import 'package:trilhaapp/model/card_detail.dart';
+import 'package:trilhaapp/repositores/card_detail_repository.dart';
 
 class Cardpage extends StatefulWidget {
   const Cardpage({super.key});
@@ -35,7 +35,7 @@ class _CardpageState extends State<Cardpage> {
             width: double.infinity,
             margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: cardDetail == null
-                ? LinearProgressIndicator()
+                ? const LinearProgressIndicator()
                 : InkWell(
                     onTap: () {
                       Navigator.push(
