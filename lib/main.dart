@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:trilhaapp/model/dados_cadastrais_model.dart';
 import 'package:trilhaapp/model/tafera_model_hive.dart';
+
 import 'my_app.dart';
 
 void main() async {
